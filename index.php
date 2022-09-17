@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Yummy Bootstrap Template - Index</title>
+    <title>Yummy - Index</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -137,9 +137,17 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#menu">Menu</a></li>
                     <li><a href="#events">Events</a></li>
-                    <li><a href="#chefs">Chefs</a></li>
+                    <!-- <li><a href="#chefs">Chefs</a></li> -->
                     <li><a href="#gallery">Gallery</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <?php
+                    if(isset($_SESSION['Loggedin']) && $_SESSION['Loggedin'] == "true"){
+                        if(isset($_SESSION['role_id']) && $_SESSION['role_id'] == 2){
+                            echo'
+                            <li><a href="php/table_reservation.php">Table Reservation</a></li>';
+                        }
+                    }
+                    ?>
                 </ul>
             </nav>
             <!-- .navbar -->
@@ -1057,40 +1065,46 @@
                     <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
                         <form action="php/book_table_handle.php" method="post" role="form" class="php-email-form-2"
                             data-aos="fade-up" data-aos-delay="100">
-                            <div class="row gy-4">
-                                <div class="col-lg-4 col-md-6">
-                                    <input type="text" name="name" class="form-control" id="name"
-                                        placeholder="Your Name" required data-rule="minlen:4">
+                            <?php if(isset($_SESSION['Loggedin']) && $_SESSION['Loggedin'] == "true"){
+                                echo'<div class="row gy-4">
+                                    <div class="col-lg-4 col-md-6">
+                                        <input type="text" name="name" class="form-control" id="name"
+                                            placeholder="Your Name" required data-rule="minlen:4">
 
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <input type="email" class="form-control" name="email" id="email"
-                                        placeholder="Your Email" required data-rule="email">
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <input type="email" class="form-control" name="email" id="email"
+                                            placeholder="Your Email" required data-rule="email">
 
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <input type="text" class="form-control" name="phone" id="phone"
-                                        placeholder="Your Phone" required data-rule="minlen:4">
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <input type="text" class="form-control" name="phone" id="phone"
+                                            placeholder="Your Phone" required data-rule="minlen:4">
 
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <input type="date" name="date" class="form-control" id="date" placeholder="Date"
-                                        data-rule="minlen:4" required>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <input type="date" name="date" class="form-control" id="date" placeholder="Date"
+                                            data-rule="minlen:4" required>
 
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <input type="time" class="form-control" name="time" id="time" placeholder="Time"
-                                        data-rule="minlen:4" required>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <input type="number" class="form-control" name="people" id="people"
-                                        placeholder="number of people" data-rule="minlen:1">
-                                </div>
-                            </div>
-                            <div class="form-group mt-3">
-                                <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
-                                <div class="validate"></div>
-                            </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <input type="time" class="form-control" name="time" id="time" placeholder="Time"
+                                            data-rule="minlen:4" required>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <input type="number" class="form-control" name="people" id="people"
+                                            placeholder="number of people" data-rule="minlen:1">
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <textarea class="form-control" name="message" rows="5"      placeholder="Message"></textarea>
+                                        <div class="validate"></div>
+                                    </div>
+                                </div>';
+                    }else{
+
+                    }
+                        ?>
+                            
                             <div class="mb-3">
                                 <?php
                                     if(isset($_GET['table']) && $_GET['table'] == "true"){
