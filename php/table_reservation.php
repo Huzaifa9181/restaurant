@@ -28,7 +28,7 @@
     <?php 
     session_start();
     
-    include "header.php ";?>
+    include "header.php";?>
     <div class="container" style="margin-top: 150px;">
     <table class="table">
   <thead>
@@ -37,6 +37,7 @@
       <th scope="col">Email</th>
       <th scope="col">Phone Number</th>
       <th scope="col">People</th>
+      <th scope="col">Status</th>
       <th scope="col">Date</th>
       <th scope="col">Time</th>
     </tr>
@@ -48,13 +49,22 @@
     
     $sql = "SELECT * FROM `table_reservation` WHERE email='$email';";
     $result = mysqli_query($conn,$sql);
+    
     $count = 1;
     while($data = mysqli_fetch_assoc($result)){
         echo '<tr>
         <td>'.$count.'</td>
         <td>' . $data['email'] .'</td>
         <td>' . $data['phone'] .'</td>
-        <td>' . $data['people'] .'</td>
+        <td>' . $data['people'] .'</td>';
+        if($data['table_book'] == 'Waiting..'){
+          echo '<td class="text-warning">Waiting..</td>';
+        }elseif($data['table_book'] == 'Booked'){
+          echo '<td class="text-success">Booked</td>';
+        }elseif($data['table_book'] == 'Cancel'){
+          echo '<td class="text-danger"><b>Cancel<b></td>';
+        }
+        echo'
         <td>' . $data['date'] .'</td>
         <td>' . $data['time'] .'</td>
         
@@ -72,7 +82,7 @@
     
 
     <?php
-    
+    echo $_SESSION['email'];
       // include "footer.php";
     ?>
   </body>
