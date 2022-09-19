@@ -1,3 +1,7 @@
+<?php
+include_once("php/database.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,6 +29,9 @@
 
     <!-- Template Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
 </head>
 
@@ -109,7 +116,7 @@
                             <input type="password" required class="form-control" name="pass" id="pass">
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Log In</button>
+                        <button type="submit"  class="btn btn-primary">Log In</button><br><br>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -126,8 +133,6 @@
         <div class="container d-flex align-items-center justify-content-between">
 
             <a href="index.php" class="logo d-flex align-items-center me-auto me-lg-0">
-                <!-- Uncomment the line below if you also wish to use an image logo -->
-                <!-- <img src="assets/img/logo.png" alt=""> -->
                 <h1>Yummy<span>.</span></h1>
             </a>
 
@@ -159,7 +164,6 @@
                         <a class="btn-book-a-table" data-bs-toggle="modal" data-bs-target="#loginModal">Log In</a>
                         <a class="btn-book-a-table" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</a>    
                         ';
-
                     }else{
 
                         echo '<a href="php/logout.php?logout=true" class="btn-book-a-table">Logout</a>';
