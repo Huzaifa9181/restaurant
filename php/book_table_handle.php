@@ -15,7 +15,7 @@
         $rows = mysqli_num_rows($result);
 
         if($rows == 0){
-            $sql = "INSERT INTO `table_reservation` (`email`, `phone`, `people`, `date`, `time`) VALUES ( '$email', '$phone', '$people', '$date', '$time');";
+            $sql = "INSERT INTO `table_reservation` (`email`, `phone`, `people`,`table_book`, `date`, `time`) VALUES ( '$email', '$phone', '$people','Waiting..', '$date', '$time');";
             $result = mysqli_query($conn,$sql);
 
             // mail
