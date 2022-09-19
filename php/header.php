@@ -29,7 +29,7 @@
 
                     }else{
 
-                        echo '<a href="php/logout.php?logout=true" class="btn-book-a-table">Logout</a>';
+                        echo '<a href="logout.php?logout=true" class="btn-book-a-table">Logout</a>';
                     }    
                 ?>
             </div>
