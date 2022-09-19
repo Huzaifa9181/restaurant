@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Tables - SB Admin</title>
+        <title>Table Reservation - Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -102,7 +102,7 @@
                             </div>
                             <div class="sb-sidenav-menu-heading">Addons</div>
                             
-                            <a class="nav-link" href="tables.html">
+                            <a class="nav-link" href="tables.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Tables
                             </a>
@@ -138,6 +138,7 @@
                                             <th>People</th>
                                             <th>Date</th>
                                             <th>Time</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -148,6 +149,7 @@
                                             <th>People</th>
                                             <th>Date</th>
                                             <th>Time</th>
+                                            <th>Status</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -157,18 +159,28 @@
                                         $result = mysqli_query($conn,$sql);
                                         $count = 1;
                                         while($data = mysqli_fetch_assoc($result)){
+                                            
                                             echo '<tr>
                                             <td>'.$count.'</td>
                                             <td>' . $data['email'] .'</td>
                                             <td>' . $data['phone'] .'</td>
                                             <td>' . $data['people'] .'</td>
                                             <td>' . $data['date'] .'</td>
-                                            <td>' . $data['time'] .'</td>
-                                            
-                                          </tr>';
+                                            <td>' . $data['time'] .'</td>'; 
+                                            if($data['table_book'] == "Cancel"){
+                                                echo '<td class="text-danger"><b>Cancel</b></td>';
+                                            }elseif($data['table_book'] == "Booked"){
+                                                echo '<td class="text-success"><b>Booked</b></td>';
+                                            }else{
+                                                echo " <td><span><a href='?approve_id=".$data['id']."' class='btn btn-success my-2 mx-2 '>Approve</a>||<a href='?cancel=".$data['id']."' class='mx-2 btn btn-danger ' >Decline</a></span></td>
+                                              </tr>";
+                                            }
                                           $count = $count +1;
                                         }
+                                        
                                     ?>
+
+
                                     
                                     </tbody>
                                 </table>
@@ -196,3 +208,17 @@
         <script src="js/datatables-simple-demo.js"></script>
     </body>
 </html>
+
+<?php
+    if(isset($_GET['cancel']) && !empty($_GET['cancel']) ){
+        $id = $_GET['cancel']; 
+        $sql = "UPDATE `table_reservation` SET `table_book` = 'Cancel' WHERE `id` = $id";
+        $result = mysqli_query($conn,$sql);
+    }
+    
+    if(isset($_GET['approve_id']) && !empty($_GET['approve_id']) ){
+        $a_id = $_GET['approve_id']; 
+        $sql = "UPDATE `table_reservation` SET `table_book` = 'Booked' WHERE `id` = $a_id";
+        $result = mysqli_query($conn,$sql);
+    }
+?>
