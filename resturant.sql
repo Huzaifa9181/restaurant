@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2022 at 02:02 AM
+-- Generation Time: Sep 21, 2022 at 10:31 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -38,11 +38,10 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `cat_name`, `time`) VALUES
-(1, 'Starter', '2022-09-20 01:20:14'),
-(2, 'Fast Food', '2022-09-21 02:46:00'),
-(3, 'Desi', '2022-09-20 01:20:37'),
-(10, 'chinese', '2022-09-21 02:46:57'),
-(14, 'beverages', '2022-09-21 04:05:19');
+(1, 'Fast Food', '2022-09-21 18:30:08'),
+(2, 'Chinese', '2022-09-21 02:46:57'),
+(3, 'Desi', '2022-09-21 18:30:19'),
+(4, 'Beverages', '2022-09-21 04:05:19');
 
 -- --------------------------------------------------------
 
@@ -64,11 +63,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `path`, `price`, `cat_id`, `time`) VALUES
-(1, 'Biryani', '', 1250, 1, '2022-09-21 04:16:52'),
-(2, 'a', 'a', 1, 1, '2022-09-21 04:48:54'),
-(3, 'tikka', 'js.jfif', 325, 3, '2022-09-21 04:52:19'),
-(4, 'tikka', 'js.jfif', 325, 3, '2022-09-21 04:52:29'),
-(5, 'adsa', 'js.jfif', 121, 2, '2022-09-21 04:53:12');
+(1, 'Krunch Burger\n', '1.png', 290, 1, '2022-09-21 04:16:52'),
+(6, '\nKrunch With Fries N Drink', '2.png', 290, 1, '2022-09-21 18:23:26'),
+(8, 'Value Bucket\n', '3.png', 350, 1, '2022-09-21 19:58:40');
 
 -- --------------------------------------------------------
 
@@ -184,13 +181,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `role`
