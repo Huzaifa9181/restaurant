@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2022 at 10:23 PM
+-- Generation Time: Sep 21, 2022 at 02:02 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -38,25 +38,37 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `cat_name`, `time`) VALUES
-(1, 'Starters', '2022-09-20 01:20:14'),
-(2, 'Breakfast', '2022-09-20 01:20:25'),
-(3, 'Lunch', '2022-09-20 01:20:37'),
-(4, 'Dinner', '2022-09-20 01:20:49');
+(1, 'Starter', '2022-09-20 01:20:14'),
+(2, 'Fast Food', '2022-09-21 02:46:00'),
+(3, 'Desi', '2022-09-20 01:20:37'),
+(10, 'chinese', '2022-09-21 02:46:57'),
+(14, 'beverages', '2022-09-21 04:05:19');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menu`
+-- Table structure for table `products`
 --
 
-CREATE TABLE `menu` (
+CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `p_category` varchar(20) NOT NULL,
+  `path` text NOT NULL,
   `price` int(25) NOT NULL,
   `cat_id` int(20) NOT NULL,
   `time` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `path`, `price`, `cat_id`, `time`) VALUES
+(1, 'Biryani', '', 1250, 1, '2022-09-21 04:16:52'),
+(2, 'a', 'a', 1, 1, '2022-09-21 04:48:54'),
+(3, 'tikka', 'js.jfif', 325, 3, '2022-09-21 04:52:19'),
+(4, 'tikka', 'js.jfif', 325, 3, '2022-09-21 04:52:29'),
+(5, 'adsa', 'js.jfif', 121, 2, '2022-09-21 04:53:12');
 
 -- --------------------------------------------------------
 
@@ -101,7 +113,10 @@ INSERT INTO `table_reservation` (`id`, `email`, `phone`, `people`, `table_book`,
 (21, 'huzaifa@gmail.com', 1231321321, 6, 'Booked', '2022-09-09', '04:53:00'),
 (22, 'huzaifa@gmail.com', 13213131, 12, 'Booked', '2022-09-28', '06:18:00'),
 (23, 'huzaifa@gmail.com', 312541661, 22, 'Cancel', '2022-10-08', '06:31:00'),
-(24, 'huzaifa@gmail.com', 1231321321, 5, 'Booked', '2022-09-23', '06:35:00');
+(24, 'huzaifa@gmail.com', 1231321321, 5, 'Booked', '2022-09-23', '06:35:00'),
+(25, 'huzaifaahmed9181@gmail.com', 312541661, 222, 'Booked', '2022-09-13', '01:45:00'),
+(26, 'huzaifa@gmail.com', 312541661, 222, 'Booked', '2022-10-07', '01:49:00'),
+(27, 'huzaifa@gmail.com', 1231321321, 4, 'Booked', '2022-09-03', '07:08:00');
 
 -- --------------------------------------------------------
 
@@ -138,9 +153,9 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `menu`
+-- Indexes for table `products`
 --
-ALTER TABLE `menu`
+ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -169,13 +184,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `menu`
+-- AUTO_INCREMENT for table `products`
 --
-ALTER TABLE `menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -187,7 +202,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `table_reservation`
 --
 ALTER TABLE `table_reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `users`
