@@ -17,7 +17,7 @@
     $file_error = $_FILES['upload']['error'];
     $file_size = $_FILES['upload']['size'];
   
-    if(move_uploaded_file($file_tmp,"../uploads/".$file_name)){
+    if(move_uploaded_file($file_tmp,"../../uploads/".$file_name)){
         include "database.php";
         $sql = "INSERT INTO `products` (`name`, `path`, `price`, `cat_id`) VALUES ('$name', '$file_name', '$price', '$cat');
         ";
