@@ -89,34 +89,18 @@
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseAuth" aria-expanded="false"
-                                    aria-controls="pagesCollapseAuth">
-                                    Authentication
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="login.html">Login</a>
-                                        <a class="nav-link" href="register.html">Register</a>
-                                        <a class="nav-link" href="password.html">Forgot Password</a>
-                                    </nav>
-                                </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseError" aria-expanded="false"
-                                    aria-controls="pagesCollapseError">
-                                    Error
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="401.html">401 Page</a>
-                                        <a class="nav-link" href="404.html">404 Page</a>
-                                        <a class="nav-link" href="500.html">500 Page</a>
-                                    </nav>
-                                </div>
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                        Yummy Details
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="users.php">User Details</a>
+                                            <a class="nav-link" href="../tables.php">Booking Details</a>
+                                            <a class="nav-link" href="products.php">Product Details</a>
+                                            <a class="nav-link" href="category.php">Category Details</a>
+                                        </nav>
+                                    </div>    
                             </nav>
                         </div>
                         <div class="sb-sidenav-menu-heading">Addons</div>
@@ -178,12 +162,16 @@
                                         $result = mysqli_query($conn,$sql);
                                         $count = 1;
                                         while($data = mysqli_fetch_assoc($result)){
-                                            
+                                            $id = $data['cat_id'];
+                                            $c_sql = "SELECT * FROM `category` WHERE id= $id;";
+                                            $c_result = mysqli_query($conn,$c_sql);
+                                            $row = mysqli_fetch_assoc($c_result);
+
                                             echo '<tr>
                                             <td>'.$count.'</td>
                                             <td>' . $data['name'] .'</td>
-                                            <td>' . $data['price'] .'</td>
-                                            <td>' . $data['cat_id'] .'</td>
+                                            <td>$' . $data['price'] .'</td>
+                                            <td>' . $row['cat_name'] .'</td>
                                             <td>' . $data['time'] .'</td>
                                             ';
                                             echo " <td><span><button data-id=".$data['id']." class='btn btn-success my-2 mx-2 edit_btn' data-bs-toggle='modal' data-bs-target='#editModal'>Edit</button>||<a href='?delet=".$data['id']."' class='mx-2 btn btn-danger ' >Delet</a></span></td>
@@ -200,30 +188,6 @@
                 </div>
             </main>
 
-            <!-- Modal -->
-            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Edit Category Name</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="category.php" method="post">
-                                <div class="mb-3">
-                                    <label for="cat_name" class="form-label">Edit Category Name</label>
-                                    <input type="text" required class="form-control" id="cat_name" name="cat_name">
-                                    <input type="hidden" class="form-control" id="hidden_id" name="hidden_id">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Edit</button>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- ADD MODAL -->
             <!-- Modal -->
@@ -270,8 +234,54 @@
                     </div>
                 </div>
             </div>
-
             <!-- ADD MODAL -->
+
+            <!-- Edit Modal -->
+
+            <!-- Modal -->
+            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">Edit Modal</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="products.php">
+                                <div class="mb-3">
+                                    <label for="p_name" class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" name="p_name" id="p_name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="p_price" class="form-label">Product Price</label>
+                                    <input type="text" class="form-control" name="p_price" id="p_price">
+                                    <input type="hidden" class="form-control" name="hidden_id" id="hidden_id">
+                                </div>
+                                <select class="form-select mb-3" name="category" aria-label="Select Product Category">
+                                    <option selected>Select Product Category</option>
+                                    <?php
+                                        $sql = "SELECT * FROM `category`;";
+                                        $result = mysqli_query($conn,$sql);
+                                        while($data = mysqli_fetch_assoc($result)){
+                                        echo'
+                                        <option value="'.$data['id'].'">'.$data['cat_name'].'</option>
+                                        ';        
+                                        }
+                                    ?>
+                                </select>
+                            
+                                <button type="submit" class="btn btn-primary">Edit</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Edit Modal  -->
+
 
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
@@ -295,24 +305,24 @@
     <script>
     $(document).ready(function() {
 
-        function edit(id) {
-            $.ajax({
-                url: "cat_edit_ajax.php",
-                type: "POST",
-                data: {
-                    id: id
-                },
-                success: function(data) {
-                    $("#cat_name").val(data);
-                }
-            })
-        }
+        // function edit(id) {
+        //     $.ajax({
+        //         url: "cat_edit_ajax.php",
+        //         type: "POST",
+        //         data: {
+        //             id: id
+        //         },
+        //         success: function(data) {
+        //             $("#cat_name").val(data);
+        //         }
+        //     })
+        // }
 
         $(".edit_btn").click(function() {
             var id = $(this).data('id');
             $("#hidden_id").val(id);
             // console.log(id);
-            edit(id);
+            // edit(id);
 
         })
 
@@ -343,7 +353,22 @@
 
     if(isset($_GET['delet']) && !empty($_GET['delet'])){
         $id = $_GET['delet'];
-        $sql = "DELETE FROM `category` WHERE `category`.`id` = $id;";
+        $sql = "DELETE FROM `products` WHERE `products`.`id` = $id";
         $result = mysqli_query($conn,$sql);
+    }
+
+    if(isset($_POST['p_name']) && !empty($_POST['p_price'])){
+        $id = $_POST['hidden_id'];
+        $name = $_POST['p_name'];
+        $price = $_POST['p_price'];
+        $category = $_POST['category'];
+        // echo "<script>alert('$hidden_id')</script>";
+    
+        $e_sql = "UPDATE `products` SET `name` = '$name', `price` = '$price', `cat_id` = '$category' WHERE `products`.`id` = $id; ";    
+        if($e_result = mysqli_query($conn,$e_sql)){
+            header("Location: products.php");
+        }else{
+            header("Location: products.php?update=false");
+        }
     }
 ?>
