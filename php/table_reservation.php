@@ -82,7 +82,7 @@
     
 
     <?php
-    echo $_SESSION['email'];
+    // echo $_SESSION['email'];
       // include "footer.php";
     ?>
   </body>
