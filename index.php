@@ -50,7 +50,18 @@ include_once("php/database.php");
 
     if(isset($_GET['login_contact']) && $_GET['login_contact'] == "false"){
         echo "<script>alert('Please first you login then you contact with yummy resturant!')</script>";
+
     }
+
+    if(isset($_GET['register']) && $_GET['register'] == "false"){
+        $email =  $_SESSION['email'];
+        echo "<script>alert('Please enter the Login email $email')</script>";
+    }
+
+    if(isset($_GET['table']) && $_GET['table'] == "true"){
+        echo "<script>alert('Thank you for reservation your booking details send with email.')</script>";
+    }
+
 ?>
 
 
