@@ -22,7 +22,7 @@
         $sql = "INSERT INTO `products` (`name`, `path`, `price`, `cat_id`) VALUES ('$name', '$file_name', '$price', '$cat');
         ";
         $result = mysqli_query($conn,$sql);
-    //   header("location: products.php?add_product=true");
+      header("location: products.php?add_product=true");
 
     }else{
       header("location: products.php?add_product=false");
