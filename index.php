@@ -12,7 +12,7 @@ include_once("php/database.php");
     <title>Yummy - Index</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,6 +32,7 @@ include_once("php/database.php");
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    
 
 </head>
 
@@ -141,7 +142,7 @@ include_once("php/database.php");
 
 
     <header id="header" class="header fixed-top d-flex align-items-center">
-        <div class="container d-flex align-items-center justify-content-between">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
 
             <a href="index.php" class="logo d-flex align-items-center me-auto me-lg-0">
                 <h1>Yummy<span>.</span></h1>
@@ -163,12 +164,25 @@ include_once("php/database.php");
                             <li><a href="php/table_reservation.php">Table Reservation</a></li>';
                         }
                     }
+
                     ?>
                 </ul>
             </nav>
             <!-- .navbar -->
             <div>
+                <?php
+                    if(isset($_SESSION['add_to_cart'])){
+                        $count = count($_SESSION['add_to_cart']);
+                
+                        echo '<a class="btn-book-a-table" href="php/cart.php">Add To Cart <i class="bi bi-bag"></i> ('.$count.')</a>';
+                    }else{
+                        echo '<a class="btn-book-a-table" href="php/cart.php">Add To Cart <i class="bi bi-bag"></i> (0)</a>';
+                    }
+                
+                ?>
                 <a class="btn-book-a-table" href="#book-a-table">Book a Table</a>
+                
+
                 <?php
                     if(!isset($_SESSION['Loggedin'])){
                         echo'
@@ -1031,6 +1045,7 @@ include_once("php/database.php");
             class="bi bi-arrow-up-short"></i></a>
 
     <div id="preloader"></div>
+    <div id="alert"></div>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -1044,10 +1059,26 @@ include_once("php/database.php");
     <script src="assets/js/main.js"></script>
     <script>
         $(document).ready(function(){
+
+            function add_cart(id){
+                $.ajax({
+                    url : "php/add_to_cart.php",
+                    type : "POST",
+                    data : {id:id},
+                    success : function(data){
+                        $("#alert").html(data);
+                        // console.log(data);
+                    }
+                })
+            }
+
             $(".add-to-cart").on("click",function(){
                 var id = $(this).data("id");
-                console.log(id);
+                add_cart(id)
+                // console.log(id);
             })
+
+
         })
     </script>
 </body>
