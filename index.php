@@ -63,6 +63,10 @@ include_once("php/database.php");
         echo "<script>alert('Thank you for reservation your booking details send with email.')</script>";
     }
 
+    if(isset($_GET['order']) && $_GET['order'] == "true"){
+        echo "<script>alert('Your order is placed'); window.location.href='index.php';</script>";
+    }
+
 ?>
 
 
