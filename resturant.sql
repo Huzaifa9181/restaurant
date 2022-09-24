@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2022 at 10:31 PM
+-- Generation Time: Sep 24, 2022 at 03:34 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -46,6 +46,33 @@ INSERT INTO `category` (`id`, `cat_name`, `time`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `order`
+--
+
+CREATE TABLE `order` (
+  `id` int(11) NOT NULL,
+  `order_id` int(50) NOT NULL,
+  `order_name` varchar(50) NOT NULL,
+  `order_price` int(25) NOT NULL,
+  `order_quantity` int(50) NOT NULL,
+  `user_email` varchar(50) NOT NULL,
+  `time` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`id`, `order_id`, `order_name`, `order_price`, `order_quantity`, `user_email`, `time`) VALUES
+(25, 1, 'Krunch Burger\r\n', 290, 1, 'huzaifa@gmail.com', '2022-09-24 06:06:37'),
+(26, 1, 'Krunch Burger\r\n', 290, 5, 'huzaifa@gmail.com', '2022-09-24 06:10:09'),
+(27, 1, 'Krunch Burger\r\n', 290, 1, 'huzaifa@gmail.com', '2022-09-24 06:10:20'),
+(28, 1, 'Krunch Burger\r\n', 290, 1, 'huzaifa@gmail.com', '2022-09-24 06:11:46'),
+(29, 1, 'Krunch Burger\r\n', 290, 3, 'huzaifa@gmail.com', '2022-09-24 06:14:05');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `products`
 --
 
@@ -65,7 +92,13 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `name`, `path`, `price`, `cat_id`, `time`) VALUES
 (1, 'Krunch Burger\n', '1.png', 290, 1, '2022-09-21 04:16:52'),
 (6, '\nKrunch With Fries N Drink', '2.png', 290, 1, '2022-09-21 18:23:26'),
-(8, 'Value Bucket\n', '3.png', 350, 1, '2022-09-21 19:58:40');
+(8, 'Value Bucket\n', '3.png', 350, 1, '2022-09-21 19:58:40'),
+(10, 'Mutton Karahi', 'mu-2-300x169.jpg', 1500, 3, '2022-09-24 06:15:56'),
+(11, 'Halwa Puri', 'halwa_puri.jpg', 40, 3, '2022-09-24 06:16:52'),
+(12, 'Sajji', 'saji.jpg', 1600, 3, '2022-09-24 06:17:40'),
+(13, 'Coke Cola', 'coke.jpg', 100, 4, '2022-09-24 06:18:42'),
+(14, 'Special Lassi', 'lassi.jpg', 120, 4, '2022-09-24 06:23:37'),
+(15, 'Mocktails', 'mocktails.jpg', 180, 4, '2022-09-24 06:32:19');
 
 -- --------------------------------------------------------
 
@@ -150,6 +183,12 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `order`
+--
+ALTER TABLE `order`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
@@ -184,10 +223,16 @@ ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT for table `order`
+--
+ALTER TABLE `order`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `role`
