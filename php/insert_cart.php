@@ -15,6 +15,8 @@
             $sql = "INSERT INTO `order`( `order_name`,`order_id`, `order_price`, `order_quantity`, `user_email`) VALUES ('$name','$id','$price','$quantity','$email');";
             $result = mysqli_query($conn,$sql);
         };
+
+        // print_r($_SESSION['add_to_cart']);
         unset($_SESSION["add_to_cart"]);
         
         header("Location: ../index.php?order=true");
