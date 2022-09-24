@@ -436,14 +436,19 @@ include_once("php/database.php");
                                             <h5 class="card-title">'.$row['name'].'</h5>
                                             <p class="card-text">'.$name.'</p>
                                             <p class="card-text"><b>$'.$row['price'].'</b></p>
-                                            <button data-id='.$row['id'].' class="btn btn-primary add-to-cart">Add to Cart</button>
+                                            <form method="post" action="php/add_to_cart.php">
+                                                <input type="hidden" name="id" value="'.$row['id'].'">
+                                                <input type="hidden" name="p_name" value="'.$row['name'].'">
+                                                <input type="hidden" name="p_price" value="'.$row['price'].'">
+                                                <input type="hidden" name="p_quantity" value="1">
+                                                <button data-id='.$row['id'].' class="btn btn-primary add-to-cart">Add to Cart</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                                 ';
                             }
                         ?>
-                        
                     </div>
 
                 </div>
@@ -1058,28 +1063,28 @@ include_once("php/database.php");
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
     <script>
-        $(document).ready(function(){
+        // $(document).ready(function(){
 
-            function add_cart(id){
-                $.ajax({
-                    url : "php/add_to_cart.php",
-                    type : "POST",
-                    data : {id:id},
-                    success : function(data){
-                        $("#alert").html(data);
-                        // console.log(data);
-                    }
-                })
-            }
+        //     function add_cart(id){
+        //         $.ajax({
+        //             url : "php/add_to_cart.php",
+        //             type : "POST",
+        //             data : {id:id},
+        //             success : function(data){
+        //                 $("#alert").html(data);
+        //                 // console.log(data);
+        //             }
+        //         })
+        //     }
 
-            $(".add-to-cart").on("click",function(){
-                var id = $(this).data("id");
-                add_cart(id)
-                // console.log(id);
-            })
+        //     $(".add-to-cart").on("click",function(){
+        //         var id = $(this).data("id");
+        //         add_cart(id)
+        //         // console.log(id);
+        //     })
 
 
-        })
+        // })
     </script>
 </body>
 
