@@ -8,6 +8,51 @@
 
 ?>
 
+<?php
+    include "database.php";
+    if($_SERVER['REQUEST_METHOD'] == "POST"){
+        if(isset($_POST['cat_name']) && !empty($_POST['hidden_id'])){
+            $cat_name = $_POST['cat_name'];
+            $hidden_id = $_POST['hidden_id'];
+
+            $sql = "UPDATE `category` SET `cat_name` = '$cat_name' WHERE `category`.`id` = $hidden_id;";
+            $result = mysqli_query($conn,$sql);
+        }
+
+        
+        if(!empty($_POST['add_name'])){
+            $name = $_POST['add_name'];
+            $sql = "INSERT INTO `category` (`cat_name`) VALUES ('$name'); ";
+            $result = mysqli_query($conn,$sql);
+        }
+    }
+    
+
+    if(isset($_GET['delet']) && !empty($_GET['delet'])){
+        $id = $_GET['delet'];
+        $sql = "DELETE FROM `products` WHERE `products`.`id` = $id";
+        $result = mysqli_query($conn,$sql);
+        echo"<script>window.location.href='products.php';</script>";
+
+    }
+
+    if(isset($_POST['p_name']) && !empty($_POST['p_price'])){
+        $id = $_POST['hidden_id'];
+        $name = $_POST['p_name'];
+        $price = $_POST['p_price'];
+        $category = $_POST['category'];
+        // echo "<script>alert('$hidden_id')</script>";
+    
+        $e_sql = "UPDATE `products` SET `name` = '$name', `price` = '$price', `cat_id` = '$category' WHERE `products`.`id` = $id; ";    
+        if($e_result = mysqli_query($conn,$e_sql)){
+            header("Location: products.php");
+            echo"<script>window.location.href='products.php';</script>";
+        }else{
+            header("Location: products.php?update=false");
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,6 +144,7 @@
                                             <a class="nav-link" href="../tables.php">Booking Details</a>
                                             <a class="nav-link" href="products.php">Product Details</a>
                                             <a class="nav-link" href="category.php">Category Details</a>
+                                            <a class="nav-link" href="order_product.php">Order Details</a>
                                         </nav>
                                     </div>    
                             </nav>
@@ -157,7 +203,7 @@
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                        include "database.php";
+                                        
                                         $sql = "SELECT * FROM `products`;";
                                         $result = mysqli_query($conn,$sql);
                                         $count = 1;
@@ -332,43 +378,4 @@
 
 </html>
 
-<?php
-    if($_SERVER['REQUEST_METHOD'] == "POST"){
-        if(isset($_POST['cat_name']) && !empty($_POST['hidden_id'])){
-            $cat_name = $_POST['cat_name'];
-            $hidden_id = $_POST['hidden_id'];
 
-            $sql = "UPDATE `category` SET `cat_name` = '$cat_name' WHERE `category`.`id` = $hidden_id;";
-            $result = mysqli_query($conn,$sql);
-        }
-
-        
-        if(!empty($_POST['add_name'])){
-            $name = $_POST['add_name'];
-            $sql = "INSERT INTO `category` (`cat_name`) VALUES ('$name'); ";
-            $result = mysqli_query($conn,$sql);
-        }
-    }
-    
-
-    if(isset($_GET['delet']) && !empty($_GET['delet'])){
-        $id = $_GET['delet'];
-        $sql = "DELETE FROM `products` WHERE `products`.`id` = $id";
-        $result = mysqli_query($conn,$sql);
-    }
-
-    if(isset($_POST['p_name']) && !empty($_POST['p_price'])){
-        $id = $_POST['hidden_id'];
-        $name = $_POST['p_name'];
-        $price = $_POST['p_price'];
-        $category = $_POST['category'];
-        // echo "<script>alert('$hidden_id')</script>";
-    
-        $e_sql = "UPDATE `products` SET `name` = '$name', `price` = '$price', `cat_id` = '$category' WHERE `products`.`id` = $id; ";    
-        if($e_result = mysqli_query($conn,$e_sql)){
-            header("Location: products.php");
-        }else{
-            header("Location: products.php?update=false");
-        }
-    }
-?>
