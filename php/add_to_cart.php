@@ -16,9 +16,9 @@
                         $count = count($_SESSION['add_to_cart']);
                         $_SESSION['add_to_cart'][$count] = array("id" => $id, "name" => $name,"price" => $price, "quantity" => $quantity);
                         // echo print_r($_SESSION['add_to_cart']);
-                        echo"<script>alert('Item Added'); window.location.href='../index.php';</script>";
+                        echo"<script>alert('Item Added'); window.location.href='../index.php#menu';</script>";
                     }else{
-                        echo "<script>alert('item already added');window.location.href='../index.php';</script>";
+                        echo "<script>alert('item already added');window.location.href='../index.php#menu';</script>";
                     }
                         
                 }
@@ -28,7 +28,7 @@
                 $price = $_POST['p_price'];
                 $quantity = $_POST['p_quantity'];
                 $_SESSION['add_to_cart'][0] = array("id" => $id, "name" => $name,"price" => $price, "quantity" => $quantity);
-                echo"<script>alert('Item Added'); window.location.href='../index.php';</script>";
+                echo"<script>alert('Item Added'); window.location.href='../index.php#menu';</script>";
                 echo print_r($_SESSION['add_to_cart']);
             }
         }
