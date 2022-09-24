@@ -8,6 +8,58 @@
 
 ?>
 
+
+<?php
+        include "php/database.php";
+
+    if(isset($_GET['cancel']) && !empty($_GET['cancel']) ){
+        $id = $_GET['cancel']; 
+    
+        $sql = "SELECT * FROM `table_reservation` WHERE id = $id";
+        $result = mysqli_query($conn,$sql);
+        $data = mysqli_fetch_assoc($result);
+
+        $to_email = $data['email'];
+        $subject = "Yummy Restaurant";
+        $body =  'Hello Yummy Customer Thank you for booking table in Yummy Resturant. But we are apoligies for not booking your table because this date and time seats are already booked for further details go to the website and register the new table : http://localhost/resturant/php/table_reservation.php';
+        $headers = "From: huzaifaahmed1110@gmail.com";
+
+        if(mail($to_email, $subject, $body, $headers)) {
+            $sql = "UPDATE `table_reservation` SET `table_book` = 'Cancel' WHERE `id` = $id";
+            $result = mysqli_query($conn,$sql);
+            echo "<script>window.location.href='tables.php';</script>";
+
+            // echo "<script>alert('Successfully email sent the customer')</script>";
+        } else{
+            echo "<script>alert('Unsuccessfully email does not sent the customer')</script>";
+        }
+    }
+    
+    if(isset($_GET['approve_id']) && !empty($_GET['approve_id']) ){
+        $a_id = $_GET['approve_id']; 
+        $sql = "SELECT * FROM `table_reservation` WHERE id = $a_id";
+        $result = mysqli_query($conn,$sql);
+        $data = mysqli_fetch_assoc($result);
+
+        $to_email = $data['email'];
+        $subject = "Yummy Restaurant";
+        $body =  'Hello Yummy Customer Thank you for booking table in Yummy Resturant. Your seat will be booked for further details go to the website : http://localhost/resturant/php/table_reservation.php';
+        $headers = "From: huzaifaahmed1110@gmail.com";
+
+        if(mail($to_email, $subject, $body, $headers)) {
+            $a_id = $_GET['approve_id']; 
+            $sql = "UPDATE `table_reservation` SET `table_book` = 'Booked' WHERE `id` = $a_id";
+            $result = mysqli_query($conn,$sql);
+            echo "<script>window.location.href='tables.php';</script>";
+            
+
+        } else{
+            echo "<script>alert('Unsuccessfully email does not sent the customer')</script>";
+        }
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -86,6 +138,7 @@
                                             <a class="nav-link" href="tables.php">Booking Details</a>
                                             <a class="nav-link" href="php/products.php">Product Details</a>
                                             <a class="nav-link" href="php/category.php">Category Details</a>
+                                            <a class="nav-link" href="php/order_product.php">Order Details</a>
                                         </nav>
                                     </div>    
                                 </nav>
@@ -144,7 +197,7 @@
                                     </tfoot>
                                     <tbody>
                                     <?php
-                                        include "php/database.php";
+                                        
                                         $sql = "SELECT * FROM `table_reservation`;";
                                         $result = mysqli_query($conn,$sql);
                                         $count = 1;
@@ -198,48 +251,3 @@
         <script src="js/datatables-simple-demo.js"></script>
     </body>
 </html>
-
-<?php
-    if(isset($_GET['cancel']) && !empty($_GET['cancel']) ){
-        $id = $_GET['cancel']; 
-    
-        $sql = "SELECT * FROM `table_reservation` WHERE id = $id";
-        $result = mysqli_query($conn,$sql);
-        $data = mysqli_fetch_assoc($result);
-
-        $to_email = $data['email'];
-        $subject = "Yummy Restaurant";
-        $body =  'Hello Yummy Customer Thank you for booking table in Yummy Resturant. But we are apoligies for not booking your table because this date and time seats are already booked for further details go to the website and register the new table : http://localhost/resturant/php/table_reservation.php';
-        $headers = "From: huzaifaahmed1110@gmail.com";
-
-        if(mail($to_email, $subject, $body, $headers)) {
-            $sql = "UPDATE `table_reservation` SET `table_book` = 'Cancel' WHERE `id` = $id";
-            $result = mysqli_query($conn,$sql);
-            echo "<script>alert('Successfully email sent the customer')</script>";
-        } else{
-            echo "<script>alert('Unsuccessfully email does not sent the customer')</script>";
-        }
-    }
-    
-    if(isset($_GET['approve_id']) && !empty($_GET['approve_id']) ){
-        $a_id = $_GET['approve_id']; 
-        $sql = "SELECT * FROM `table_reservation` WHERE id = $a_id";
-        $result = mysqli_query($conn,$sql);
-        $data = mysqli_fetch_assoc($result);
-
-        $to_email = $data['email'];
-        $subject = "Yummy Restaurant";
-        $body =  'Hello Yummy Customer Thank you for booking table in Yummy Resturant. Your seat will be booked for further details go to the website : http://localhost/resturant/php/table_reservation.php';
-        $headers = "From: huzaifaahmed1110@gmail.com";
-
-        if(mail($to_email, $subject, $body, $headers)) {
-            $a_id = $_GET['approve_id']; 
-            $sql = "UPDATE `table_reservation` SET `table_book` = 'Booked' WHERE `id` = $a_id";
-            $result = mysqli_query($conn,$sql);
-            echo "<script>alert('Successfully email sent the customer')</script>";
-
-        } else{
-            echo "<script>alert('Unsuccessfully email does not sent the customer')</script>";
-        }
-    }
-?>
