@@ -52,7 +52,7 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="php/logout.php?logout=true">Logout</a></li>
+                    <li><a class="dropdown-item" href="logout.php?logout=true">Logout</a></li>
                 </ul>
             </li>
         </ul>
