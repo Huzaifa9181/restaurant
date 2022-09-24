@@ -99,6 +99,7 @@
                                             <a class="nav-link" href="../tables.php">Booking Details</a>
                                             <a class="nav-link" href="products.php">Product Details</a>
                                             <a class="nav-link" href="category.php">Category Details</a>
+                                            <a class="nav-link" href="order_product.php">Order Details</a>
                                         </nav>
                                     </div>    
                             </nav>
@@ -289,6 +290,8 @@
 
             $sql = "UPDATE `category` SET `cat_name` = '$cat_name' WHERE `category`.`id` = $hidden_id;";
             $result = mysqli_query($conn,$sql);
+            echo"<script>window.location.href='category.php';</script>";
+
         }
 
         
@@ -296,6 +299,7 @@
             $name = $_POST['add_name'];
             $sql = "INSERT INTO `category` (`cat_name`) VALUES ('$name'); ";
             $result = mysqli_query($conn,$sql);
+            echo"<script>window.location.href='category.php';</script>";
         }
     }
     
@@ -304,5 +308,7 @@
         $id = $_GET['delet'];
         $sql = "DELETE FROM `category` WHERE `category`.`id` = $id;";
         $result = mysqli_query($conn,$sql);
+        echo"<script>window.location.href='category.php';</script>";
+
     }
 ?>
