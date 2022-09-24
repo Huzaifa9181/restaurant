@@ -1,3 +1,6 @@
+
+
+
 <!doctype html>
 <html lang="en">
 
@@ -22,6 +25,12 @@
         position: relative;
         left: 122px;
     }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }   
     </style>
 </head>
 
@@ -49,12 +58,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <form method="post" action="update_cart.php" id="cart-form">
                         <?php
                 
                     $number = 1;
-
+                    $q= 0;
+                    $total = 0;
                     if(isset($_SESSION['add_to_cart']) && !empty($_SESSION['add_to_cart'])){
-                        $total = 0;
                         $price = 0;
                         $quan = 0;
                         foreach($_SESSION['add_to_cart'] as $key => $value ){
@@ -62,60 +72,75 @@
                             $result = mysqli_query($conn,$sql);
                             $row = mysqli_fetch_assoc($result); 
                             
-                            $total = $total + $value['price'] * $value['quantity'];
-                        
+                            if ( !empty($value['quantity']) ) {
+                                    $total = $total + $value['price'] * $value['quantity'][0];
+                            } else {
+                                echo "adas";
+                                // $total = 0;
+                            }
+
+
                             echo'<tr>
-                            <td>'.$number.'</td>
-                            <td>'.$value['name'].'</td>
-                            <td>'.$value['price'].'</td>
-                            
-                            
-                            <form method="post" action="add_to_cart.php">
+                                <td>'.$number.'</td>
+                                <td>'.$value['name'].'
+                                <input type="hidden" name="p_name[]" value="'.$value['name'].'">
+                                </td>
+                                <td>'.$value['price'].'
+                                <input type="hidden" name="p_price[]" value="'.$value['price'].'">
+                                </td>
                                 <div class="input-group mb-3">
                                     <td>
                                     <span style="display: flex;">
                                     <button class="input-group-text decrement-btn">-</button>
-                                    <input type="number" style="width: 36px;" value="'.$value['quantity'].'" class="quantity inp-quantity text-center" onchange="this.form.submit();" name="quantity">
+                                    <input type="number" style="width: 50px;" value="'.$value['quantity'][0].'" class=quantity inp-quantity text-center" name="quantity[]">
                                     <button class="input-group-text increment-btn">+</button>
                                     </span>
                                     </td>
-
-                                    <input type="hidden" name="quantity_id" value="'.$value['id'].'">
+                                    <input type="hidden" name="p_id[]" value="'.$value['id'].'">
                                 </div>
-                            </form>
-                            
                             <td>
-                                <form method="post" action="add_to_cart.php">
-                                    <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i></button>
-                                    <input type="hidden" name="del_id" value="'.$value['id'].'">
-                                
-                                </form>
+                                    <button data-id="'.$value['id'].'" class="btn btn-danger del_btn"><i class="bi bi-trash"></i></button>
                             </td>
                             </tr>';
                             $number = $number + 1;
-
                             
                         }
                     }    
-                ?>
+                    // echo print_r();
+                    ?>
+                    </form>
                     </tbody>
                 </table>
-                
+                <?php
+                    if(isset($_SESSION['add_to_cart'][0]['id'])){
+                        echo' <button type="submit" form="cart-form" class="btn btn-success mx-5" id="update-btn">Update</button>';
+                    }
+                ?>
             </div>
             <div class="col-md-3 mt-5 mx-5">
             <?php
             if(isset($_SESSION['Loggedin']) && $_SESSION['Loggedin'] == "true"){
-                echo'  
-                 <div class="pay mt-5 p-2">
-                       <h3 class="text-center pt-3"><b>Total Amount<b></h3>
-                       <h5 class="text-center"><b>$'. $total.'</b></h5>
-                       <a href="insert_cart.php" class="btn btn-primary m-2" id="pay-btn">Check Out</a>
-                   </div>
-               </div>';
+                if($total > 0){
+                    echo'  
+                     <div class="pay mt-5 p-2">
+                           <h3 class="text-center pt-3"><b>Total Amount<b></h3>
+                           <h5 class="text-center"><b>$'. $total.'</b></h5>
+                           <a href="insert_cart.php" class="btn btn-primary m-2" id="pay-btn">Check Out</a>
+                       </div>
+                   </div>';
+                }else{
+                    echo'  
+                     <div class="pay mt-5 p-2">
+                           <h3 class="text-center pt-3"><b>Total Amount<b></h3>
+                           <h5 class="text-center"><b>$'. $total=0 .'</b></h5>
+                           <a href="insert_cart.php" class="btn btn-primary m-2" id="pay-btn">Check Out</a>
+                       </div>
+                   </div>';
+                }
             }else{
                 echo'  
-                 <div class="pay">
-                       <h3 class="text-center p-3">First You Logged In</h3>
+                 <div class="pay mt-5">
+                       <h3 class="text-center p-3">First you Logged In then your order is place</h3>
                    </div>
                </div>';
             }
@@ -123,6 +148,10 @@
         </div>
 
     </div>
+
+    
+
+    <div class="alert"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
@@ -135,31 +164,41 @@
                 console.log(data);
             });
 
-            $(".increment-btn").click(function(e){
-                // e.preventDefault();
-                var qty = $(this).closest(".table-cont").find(".inp-quantity").val();
-
-                var value = parseInt(qty, 10);
-                value = isNaN(value) ? 0 : value;
-                if(value < 10){
-                    value ++;
-                    $(".inp-quantity").val(value);
-                    $(this).closest(".table-cont").find(".inp-quantity").val();
+            $('.increment-btn').click(function(e){
+                e.preventDefault();
+                var input = $(this).prev('.quantity');
+                console.log(input.val());
+                if ( input != '' ) {
+                    var value = parseInt(input.val()) + 1;
+                } else {
+                    var value = 1;
                 }
+                input.val(value);
+            });
+
+            $('.decrement-btn').click(function(e){
+                e.preventDefault();
+                var input = $(this).next('.quantity');
+                if ( input.val() > 1 ) {
+                    var value = parseInt(input.val()) - 1;
+                    input.val(value);
+                }
+            });
+
+            $(".del_btn").click(function(e){
+                e.preventDefault();
+                var d_id = $(this).data("id");
+                $.ajax({
+                    url : "del_cart.php",
+                    type : "POST",
+                    data : {d_id : d_id},
+                    success: function(data){
+                        $(".alert").html(data);
+                        // console.log(data);
+                    }
+                })
             })
 
-            $(".decrement-btn").click(function(e){
-                // e.preventDefault();
-                var qty = $(this).closest(".table-cont").find(".inp-quantity").val();
-
-                var value = parseInt(qty, 10);
-                value = isNaN(value) ? 0 : value;
-                if(value > 1){
-                    value --;
-                    $(".inp-quantity").val(value);
-                    $(this).closest(".table-cont").find(".inp-quantity").val();
-                }
-            })
         })
 
 
@@ -167,3 +206,6 @@
 </body>
 
 </html>
+
+
+
