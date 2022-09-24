@@ -100,6 +100,7 @@
                                             <a class="nav-link" href="../tables.php">Booking Details</a>
                                             <a class="nav-link" href="products.php">Product Details</a>
                                             <a class="nav-link" href="category.php">Category Details</a>
+                                            <a class="nav-link" href="order_product.php">Order Details</a>
                                         </nav>
                                     </div>    
                             </nav>
@@ -227,6 +228,7 @@
         $id = $_GET['delet']; 
         $sql = "DELETE FROM `users` WHERE `users`.`id` = $id";
         $result = mysqli_query($conn,$sql);
+        echo"<script>window.location.href='users.php';</script>";
     }
 ?>
 
