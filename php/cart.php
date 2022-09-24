@@ -18,6 +18,10 @@
     .pay {
     background: #cdc5c5;
     }
+    #pay-btn {
+        position: relative;
+        left: 122px;
+    }
     </style>
 </head>
 
@@ -50,15 +54,16 @@
                     $number = 1;
 
                     if(isset($_SESSION['add_to_cart']) && !empty($_SESSION['add_to_cart'])){
+                        $total = 0;
+                        $price = 0;
+                        $quan = 0;
                         foreach($_SESSION['add_to_cart'] as $key => $value ){
                             $sql = "SELECT * FROM `products` WHERE id =$value[id];";
                             $result = mysqli_query($conn,$sql);
-                            $row = mysqli_fetch_assoc($result);
-
-                            // $total;
-                            // $price= $value['price'];
-                            // $total = $total + $price;
-
+                            $row = mysqli_fetch_assoc($result); 
+                            
+                            $total = $total + $value['price'] * $value['quantity'];
+                        
                             echo'<tr>
                             <td>'.$number.'</td>
                             <td>'.$value['name'].'</td>
@@ -98,13 +103,23 @@
                 
             </div>
             <div class="col-md-3 mt-5 mx-5">
-            
-                <div class="pay">
-                    <h3 class="text-center p-3">Total Amount    </h3>
-                    <h5 class="text-center">$<?php echo $total = 0; ?></h5>
-                    <a href="insert_cart.php" class="btn btn-primary m-2" id="pay-btn">Check Out</a>
-                </div>
-            </div>
+            <?php
+            if(isset($_SESSION['Loggedin']) && $_SESSION['Loggedin'] == "true"){
+                echo'  
+                 <div class="pay mt-5 p-2">
+                       <h3 class="text-center pt-3"><b>Total Amount<b></h3>
+                       <h5 class="text-center"><b>$'. $total.'</b></h5>
+                       <a href="insert_cart.php" class="btn btn-primary m-2" id="pay-btn">Check Out</a>
+                   </div>
+               </div>';
+            }else{
+                echo'  
+                 <div class="pay">
+                       <h3 class="text-center p-3">First You Logged In</h3>
+                   </div>
+               </div>';
+            }
+            ?>
         </div>
 
     </div>
@@ -121,7 +136,7 @@
             });
 
             $(".increment-btn").click(function(e){
-                e.preventDefault();
+                // e.preventDefault();
                 var qty = $(this).closest(".table-cont").find(".inp-quantity").val();
 
                 var value = parseInt(qty, 10);
@@ -134,7 +149,7 @@
             })
 
             $(".decrement-btn").click(function(e){
-                e.preventDefault();
+                // e.preventDefault();
                 var qty = $(this).closest(".table-cont").find(".inp-quantity").val();
 
                 var value = parseInt(qty, 10);
