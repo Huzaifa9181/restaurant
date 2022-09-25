@@ -38,7 +38,7 @@
             }
             
         }else{
-            header("Location: ../index.php?register=false");
+            header("Location: ../index.php?login_contact=false");
         }   
 
     }
