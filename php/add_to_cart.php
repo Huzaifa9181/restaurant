@@ -16,19 +16,18 @@
                         $count = count($_SESSION['add_to_cart']);
                         $_SESSION['add_to_cart'][$count] = array("id" => $id, "name" => $name,"price" => $price, "quantity" => $quantity);
                         // echo print_r($_SESSION['add_to_cart']);
-                        echo"<script>alert('Item Added'); window.location.href='../index.php#menu';</script>";
+                        echo"<script>window.location.href='../index.php?item=true#menu';</script>";
                     }else{
-                        echo "<script>alert('item added');window.location.href='../index.php#menu';</script>";
                         $id = $_POST['id'];
                         $name = $_POST['p_name'];
                         $price = $_POST['p_price'];
                         $quantity = $_POST['p_quantity'];
                         $_SESSION['add_to_cart'][0] = array("id" => $id, "name" => $name,"price" => $price, "quantity" => $quantity);
-                        echo"<script>alert('Item Added'); window.location.href='../index.php#menu';</script>";
+                        echo "<script>window.location.href='../index.php?item=true#menu';</script>";
                     }
                         
                 }else{
-                    echo"<script>alert('Item Already Added'); window.location.href='../index.php#menu';</script>";
+                    echo"<script>window.location.href='../index.php?item=false#menu';</script>";
                 }
             }else{
                 $id = $_POST['id'];
@@ -36,7 +35,7 @@
                 $price = $_POST['p_price'];
                 $quantity = $_POST['p_quantity'];
                 $_SESSION['add_to_cart'][0] = array("id" => $id, "name" => $name,"price" => $price, "quantity" => $quantity);
-                echo"<script>alert('Item Added'); window.location.href='../index.php#menu';</script>";
+                echo"<script>window.location.href='../index.php?item=true#menu';</script>"; 
                 echo print_r($_SESSION['add_to_cart']);
             }
         }
