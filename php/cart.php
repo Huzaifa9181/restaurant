@@ -1,6 +1,3 @@
-
-
-
 <!doctype html>
 <html lang="en">
 
@@ -13,6 +10,7 @@
     <link href="../assets/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style>
     .table-cont {
         margin-top: 143px !important;
@@ -194,7 +192,6 @@
                     data : {d_id : d_id},
                     success: function(data){
                         $(".alert").html(data);
-                        // console.log(data);
                     }
                 })
             })
