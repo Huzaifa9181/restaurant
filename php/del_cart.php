@@ -6,7 +6,7 @@
             if($value['id'] == $_POST['d_id']){
                 unset($_SESSION['add_to_cart'][$key]);
                 $_SESSION['add_to_cart'] = array_values($_SESSION['add_to_cart']);
-                echo"<script>alert('Item Removed'); window.location.href='cart.php';</script>";
+                echo "<script>swal('Deleted!', 'Item is removed into cart. Now you can update your cart','warning');</script>";
             }
         }
     }
