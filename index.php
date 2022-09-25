@@ -32,6 +32,7 @@ include_once("php/database.php");
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
 
 </head>
@@ -42,31 +43,36 @@ include_once("php/database.php");
     session_start();
 
     if(isset($_GET['pass_match']) && $_GET['pass_match'] == "false"){
-        echo "<script>alert('Password Does Not Matched!')</script>";
+        echo "<script>swal('Password Does Not Matched!', 'Please enter the correct password', 'warning');</script>";
     };
 
     if(isset($_GET['user_exsist']) && $_GET['user_exsist'] == "true"){
-        echo "<script>alert('This email is already exsists!')</script>";
+        echo "<script>swal('This email is already exsists!', 'You Please register yourself with another email', 'warning');</script>";
+        echo "<script>alert('')</script>";
     }
 
     if(isset($_GET['login_contact']) && $_GET['login_contact'] == "false"){
-        echo "<script>alert('Please first you login then you contact with yummy resturant!')</script>";
-
-    }
-
-    if(isset($_GET['register']) && $_GET['register'] == "false"){
         $email =  $_SESSION['email'];
-        echo "<script>alert('Please enter the Login email $email')</script>";
+        echo "<script>swal('Error', 'Please enter the Login email $email !','warning');</script>";
+
     }
 
     if(isset($_GET['table']) && $_GET['table'] == "true"){
-        echo "<script>alert('Thank you for reservation your booking details send with email.')</script>";
+        echo "<script>swal('Thank you!', ' for reservation your booking details send with email.','success');</script>";
+    
     }
 
     if(isset($_GET['order']) && $_GET['order'] == "true"){
-        echo "<script>alert('Your order is placed'); window.location.href='index.php';</script>";
+        echo "<script>swal('Thank You!', 'Your order is placed', 'success');</script>";
     }
 
+    if(isset($_GET['item']) && $_GET['item'] == "true"){
+        echo "<script>swal('Item Added to Cart!', 'Your item is added to cart', 'success');</script>";
+    }
+
+    if(isset($_GET['item']) && $_GET['item'] == "false"){
+        echo "<script>swal('Item Already Added to Cart!', 'Your Item is Already Added to cart', 'warning');</script>";
+    }
 ?>
 
 
@@ -411,7 +417,7 @@ include_once("php/database.php");
                     while($row = mysqli_fetch_assoc($result)){
                         $name = $row['cat_name'];
                         echo'<li class="nav-item">
-                        <a class="nav-link show" data-bs-toggle="tab" data-bs-target="#menu-'.$name.'">
+                        <a class="nav-link show" >
                             <h4>'.$row['cat_name'].'</h4>
                         </a>
                     </li>';
