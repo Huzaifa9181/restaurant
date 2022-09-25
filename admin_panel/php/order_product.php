@@ -7,12 +7,7 @@
     }else{
         header("Location: login.html");
     }
-    if(isset($_GET['delet']) && !empty($_GET['delet']) ){
-        $id = $_GET['delet']; 
-        $sql = "DELETE FROM `order` WHERE `order`.`id` = $id";
-        $result = mysqli_query($conn,$sql);
-        echo"<script>alert('Order Delet');window.location.href='order_product.php';</script>";
-    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -30,9 +25,10 @@
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
+
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -231,3 +227,17 @@
 </body>
 
 </html>
+
+
+<?php
+    if(isset($_GET['delet']) && !empty($_GET['delet']) ){
+        $id = $_GET['delet']; 
+        $sql = "DELETE FROM `order` WHERE `order`.`id` = $id";
+        $result = mysqli_query($conn,$sql);
+        echo"<script>window.location.href='order_product.php?order=delet';</script>";
+    }
+
+    if(isset($_GET['order']) && !empty($_GET['order']) ){
+        echo "<script>swal('order deleted!', '', 'warning');</script>";
+    }
+?>
