@@ -19,14 +19,18 @@
                         $_SESSION['add_to_cart'][$key]['quantity'] = $_POST['quantity'][$i];
 
                         echo"<script>window.location.href='cart.php';</script>";
+                    }else{
+                        echo "<script>window.location.href='cart.php';</script>";
+                        
                     }
                 }
                 
             }
+        }else{
+            echo "<script>window.location.href='cart.php';</script>";
+            
         }
-
-        echo print_r($_SESSION['add_to_cart']);
-
-        
     }
+
+    echo "<script>window.location.href='cart.php';</script>";
 ?>
