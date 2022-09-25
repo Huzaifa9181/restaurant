@@ -21,6 +21,12 @@
     
     <link href="../assets/css/main.css" rel="stylesheet">
 
+<style>
+  table {
+    margin-bottom: 214px !important;
+}
+</style>
+
   </head>
   <body>
     
@@ -83,7 +89,7 @@
 
     <?php
     // echo $_SESSION['email'];
-      // include "footer.php";
+      include "footer.php";
     ?>
   </body>
 </html>
